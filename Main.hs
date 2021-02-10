@@ -40,12 +40,9 @@ data DayHealthItem = DayHealthItem { summary_date :: String,
 
 instance FromJSON DayHealthItem
 
-main :: [DayHealthItem]
 main = do
   input <- B.readFile "mock/data.json"
-  let mm = decode input :: Maybe [DayHealthItem]
-  case mm of
-    Nothing -> print "error parsing JSON"
-    Just m -> m
-
-greet m = m
+  let maybeDecodedJSON = decode input :: Maybe [DayHealthItem]
+  case maybeDecodedJSON of
+    Nothing -> error "error parsing JSON"
+    Just decodedJSON -> (putStrLn.show) decodedJSON
